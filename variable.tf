@@ -2,9 +2,9 @@ variable "aws_region" {
   type = string
 }
 
-variable "role_arn" {
-  type = string
-}
+#variable "role_arn" {
+ # type = string
+#}
 
 variable "ecr_name" {
   type = string

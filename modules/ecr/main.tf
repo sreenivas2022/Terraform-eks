@@ -18,30 +18,34 @@ resource "aws_ecr_repository" "this" {
   }
 }
 
+# Data source to generate an IAM policy document specifically for ECR (Elastic Container Registry)
 data "aws_iam_policy_document" "ecr_policy" {
   statement {
-    sid    = "CrossAccountAccess"
+    sid    = "CrossAccountAccess" # Statement ID identifying the purpose of this rule
     effect = "Allow"
 
+    # Defines who is allowed to access the ECR repository
     principals {
       type = "AWS"
 
+      # Dynamically generates a list of AWS root account ARNs using a list of account IDs
       identifiers = [
         for account_id in var.cross_account_ids :
         "arn:aws:iam::${account_id}:root"
       ]
     }
 
+    # The list of allowed actions, enabling pull, push, and image description capabilities
     actions = [
-      "ecr:BatchCheckLayerAvailability",
-      "ecr:BatchGetImage",
-      "ecr:GetDownloadUrlForLayer",
-      "ecr:PutImage",
-      "ecr:InitiateLayerUpload",
-      "ecr:UploadLayerPart",
-      "ecr:CompleteLayerUpload",
-      "ecr:ListImages",
-      "ecr:DescribeImages"
+      "ecr:BatchCheckLayerAvailability", # Check if image layers exist
+      "ecr:BatchGetImage",               # Pull image manifests
+      "ecr:GetDownloadUrlForLayer",      # Download image layers
+      "ecr:PutImage",                    # Push/upload final images
+      "ecr:InitiateLayerUpload",         # Start the image upload process
+      "ecr:UploadLayerPart",             # Upload parts of an image layer
+      "ecr:CompleteLayerUpload",         # Finalize the layer upload
+      "ecr:ListImages",                  # List images in the registry
+      "ecr:DescribeImages"               # View image metadata/details
     ]
   }
 }

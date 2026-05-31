@@ -18,6 +18,6 @@ variable "created_date" {
   type = string
 }
 
-variable "cross_account_ids" {
-  type = list(string)
-}
+#variable "cross_account_ids" {
+ # type = list(string)
+#}
