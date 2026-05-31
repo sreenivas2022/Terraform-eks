@@ -1,6 +1,6 @@
 aws_region = "ap-south-1"
 
-role_arn = "arn:aws:iam::613958885661:role/Terraform-leela-role"
+#role_arn = "arn:aws:iam::613958885661:role/Terraform-leela-role"
 
 ecr_name     = "leela-terraform"
 environment  = "dev"
